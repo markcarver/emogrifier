@@ -1064,7 +1064,7 @@ class Emogrifier
 
         $media = '';
         $cssForAllowedMediaTypes = preg_replace_callback(
-            '#@media\\s+(?:only\\s)?(?:[\\s{\\(]' . $mediaTypesExpression . ')\\s?[^{]+{.*}\\s*}\\s*#misU',
+            '#@media\\s+(?:only\\s)?(?:[\\s{\\(]' . $mediaTypesExpression . ')[^{]*{.*}\\s*}\\s*#misU',
             function ($matches) use (&$media) {
                 $media .= $matches[0];
             },
@@ -1074,7 +1074,7 @@ class Emogrifier
         // filter the CSS
         $search = [
             'import directives' => '/^\\s*@import\\s[^;]+;/misU',
-            'remaining media enclosures' => '/^\\s*@media\\s[^{]+{(.*)}\\s*}\\s/misU',
+            'remaining media enclosures' => '/@media\\s?[^{]+{(.*)}\\s*}/misU',
         ];
 
         $cleanedCss = preg_replace($search, '', $cssForAllowedMediaTypes);
